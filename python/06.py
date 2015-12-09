@@ -4,7 +4,7 @@ filename = "06.txt"
 
 regex = re.compile(r'^(turn on|toggle|turn off)\s+(\d+,\d+)\s.*\s(\d+,\d+)$')
 
-lights = [[False for x in range(1000)] for x in range(1000)]
+lights = [[0 for x in range(1000)] for x in range(1000)]
 instructions = [x.strip() for x in open(filename).readlines()]
 
 def turn_on(lights, start, finish):
@@ -13,7 +13,7 @@ def turn_on(lights, start, finish):
 
     for x in range(start_x, finish_x + 1):
         for y in range(start_y, finish_y + 1):
-            lights[x][y] = True
+            lights[x][y] = lights[x][y] + 1
 
 def turn_off(lights, start, finish):
     (start_x, start_y) =map(int, start.split(","))
@@ -21,7 +21,7 @@ def turn_off(lights, start, finish):
 
     for x in range(start_x, finish_x + 1):
         for y in range(start_y, finish_y + 1):
-            lights[x][y] = False
+            lights[x][y] = max(0, lights[x][y] - 1)
 
 def toggle(lights, start, finish):
     (start_x, start_y) =map(int, start.split(","))
@@ -29,7 +29,7 @@ def toggle(lights, start, finish):
 
     for x in range(start_x, finish_x + 1):
         for y in range(start_y, finish_y + 1):
-            lights[x][y] = not lights[x][y]
+            lights[x][y] = lights[x][y] + 2
 
 
 for i in instructions:
@@ -46,11 +46,10 @@ for i in instructions:
     elif instruction.strip() == "turn off":
         turn_off(lights, start, finish)
 
-lit = 0
+lumosity = 0
 
 for x in range(1000):
     for y in range(1000):
-        if lights[x][y]:
-            lit = lit + 1
+        lumosity = lumosity + lights[x][y]
 
-print lit
+print lumosity
