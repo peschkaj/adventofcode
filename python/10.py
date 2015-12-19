@@ -14,3 +14,10 @@ for x in xrange(40):
     input = look_and_say(input)
 
 print len(input)
+
+input = '1321131112'
+
+for x in xrange(50):
+    input = look_and_say(input)
+
+print len(input)
